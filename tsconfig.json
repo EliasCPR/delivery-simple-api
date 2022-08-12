@@ -3,7 +3,13 @@
     "sourceMap": true,
     "outDir": "dist",
     "strict": false,
-    "lib": ["esnext"],
-    "esModuleInterop": true
-  }
+    "lib": ["esnext","ES5","ES6","DOM"],
+    "esModuleInterop": true,
+    "target": "ES6",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true
+  },
+  "include": ["./src/**/*", "test/export-excel.test.ts"]
 }
