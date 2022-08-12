@@ -1,12 +1,14 @@
 export interface ClientInput {
-  name: string;
+  id?: string;
+  name?: string;
   email: string;
   password: string;
 }
 
 export interface ClientRepository {
   createClient(client: ClientInput): Promise<ClientInput>;
-  getClient(id: string): Promise<ClientInput | Error | null >;
+  getClientById(id: string): Promise<ClientInput>;
+  getClientByEmail(email: string): Promise<ClientInput>;
   getClients(): Promise<ClientInput[]>;
   updateClient(id: string,client: ClientInput): Promise<ClientInput>;
   deleteClient(id: string): Promise<ClientInput>;
