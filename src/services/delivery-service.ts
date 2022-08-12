@@ -7,4 +7,12 @@ export class DeliveryService {
   async create({client_id, item_name}: DeliveryInput): Promise<DeliveryInput> {
     return await this.deliveryRepository.createDelivery({ client_id, item_name });
   }
+
+  async findAllDeliveriesAvailable(): Promise<DeliveryInput[]> {
+    return await this.deliveryRepository.findAllDeliveriesAvailable();
+  }
+
+  async toAssignDeliveryToDeliveryman({id, deliveryman_id}: DeliveryInput): Promise<DeliveryInput> {
+    return await this.deliveryRepository.toAssignDeliveryToDeliveryman({ id, deliveryman_id });
+  }
 }

@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { authenticateClient, createClient, listClients } from "./controllers/client-controller";
-import { createDelivery } from "./controllers/delivery-controller";
+import { createDelivery, findAllDeliveriesAvailable, toAssignDeliveryToDeliveryman } from "./controllers/delivery-controller";
 import { authenticateDeliveryman, createDeliveryman, listDeliverymen } from "./controllers/deliveryman-controller";
+import { ensureAuthenticateClient } from "./middleware/ensure-authenticate-client";
+import { ensureAuthenticateDeliveryman } from "./middleware/ensure-authenticate-deliveryman";
 
 const router = Router();
 
@@ -16,6 +18,8 @@ router.get("/v1/deliveryman/", listDeliverymen)
 router.post("/v1/deliveryman/authenticate", authenticateDeliveryman)
 
 //router deliveries
-router.post("/v1/delivery/", createDelivery)
+router.post("/v1/delivery/", ensureAuthenticateClient, createDelivery)
+router.get("/v1/delivery/available", ensureAuthenticateDeliveryman,findAllDeliveriesAvailable)
+router.put("/v1/delivery/:id/assign", ensureAuthenticateDeliveryman, toAssignDeliveryToDeliveryman)
 
 export {router}

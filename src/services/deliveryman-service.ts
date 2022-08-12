@@ -56,7 +56,7 @@ export class DeliverymanService {
       throw new ClientException("email and/or password invalid", 400);
     }
 
-    const token = sign(deliverymanExists, "secret", {
+    const token = sign(deliverymanExists, "secret0", {
       expiresIn: "1h",
       subject: deliverymanExists.id,
     });

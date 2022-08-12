@@ -5,7 +5,6 @@ export class PrismaDeliveryRepository implements DeliveryRepository {
   createDelivery({
     item_name,
     client_id,
-    deliveryman_id,
   }: DeliveryInput): Promise<DeliveryInput> {
     return prisma.deliveries.create({
       data: {
@@ -18,6 +17,19 @@ export class PrismaDeliveryRepository implements DeliveryRepository {
   getDeliveryById(id: string): Promise<DeliveryInput> {
     return prisma.deliveries.findFirst({
       where: { id },
+    });
+  }
+
+  findAllDeliveriesAvailable(): Promise<DeliveryInput[]> {
+    return prisma.deliveries.findMany({
+      where: { end_at: null, deliveryman_id: null },
+    });
+  }
+
+  toAssignDeliveryToDeliveryman({ id, deliveryman_id}: DeliveryInput){
+    return prisma.deliveries.update({
+      where: { id},
+      data: {deliveryman_id}
     });
   }
 }

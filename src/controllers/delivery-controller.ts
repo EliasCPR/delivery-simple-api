@@ -7,12 +7,46 @@ const prismaDeliveryRepository = new PrismaDeliveryRepository();
 const deliveryService = new DeliveryService(prismaDeliveryRepository);
 
 export async function createDelivery(req: Request, res: Response) {
-  const { client_id, item_name } = req.body;
+  const { item_name } = req.body;
+  const { client_id } = req;
 
   try {
     const delivery = await deliveryService.create({ client_id, item_name });
 
     return res.status(201).send(delivery);
+  } catch (e) {
+    return res.status(400).send({
+      message: e.message,
+    });
+  }
+}
+
+export async function findAllDeliveriesAvailable(
+  req: Request,
+  res: Response
+) {
+  try {
+    const deliveries = await deliveryService.findAllDeliveriesAvailable();
+
+    return res.status(200).send(deliveries);
+  } catch (e) {
+    return res.status(400).send({
+      message: e.message,
+    });
+  }
+}
+
+export async function toAssignDeliveryToDeliveryman(req: Request, res: Response) {
+  const { deliveryman_id } = req;
+  const { id } = req.params;
+
+  try {
+    const delivery = await deliveryService.toAssignDeliveryToDeliveryman({
+      id,
+      deliveryman_id,
+    });
+
+    return res.status(200).send(delivery);
   } catch (e) {
     return res.status(400).send({
       message: e.message,
