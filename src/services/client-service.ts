@@ -9,7 +9,6 @@ export class ClientService {
 
   async create({ email, name, password }: ClientInput) {
     const clientExists = await this.clientRepository.getClientByEmail(email);
-    console.log(clientExists);
 
     if (clientExists) {
       throw new ClientException("Client already exists", 400);
