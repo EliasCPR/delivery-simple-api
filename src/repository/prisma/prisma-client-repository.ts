@@ -20,7 +20,9 @@ export class PrismaClientRepository implements ClientRepository {
 
   getClientById(id: string): Promise<ClientInput> {
     return prisma.clients.findFirst({
-      where: { id },
+      where: { id : {
+        equals: id,
+      }},
     });
   }
 

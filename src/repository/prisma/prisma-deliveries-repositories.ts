@@ -26,10 +26,33 @@ export class PrismaDeliveryRepository implements DeliveryRepository {
     });
   }
 
-  toAssignDeliveryToDeliveryman({ id, deliveryman_id}: DeliveryInput){
+  toAssignDeliveryToDeliveryman({ id, deliveryman_id }: DeliveryInput) {
     return prisma.deliveries.update({
-      where: { id},
-      data: {deliveryman_id}
+      where: { id },
+      data: { deliveryman_id },
+    });
+  }
+
+  findAllDeliveriesByClientId(client_id: string): Promise<DeliveryInput[]> {
+    return prisma.clients.findMany({
+      where: { id: client_id },
+      select: { deliveries: true, id: true, name: true, password: false },
+    });
+  }
+
+  findAllDeliveriesByDeliverymanId(
+    deliveryman_id: string
+  ): Promise<DeliveryInput[]> {
+    return prisma.deliveryman.findMany({
+      where: { id: deliveryman_id },
+      select: { id: true, deliveries: true, name: true },
+    });
+  }
+
+  updateEndAt({ id, deliveryman_id }: DeliveryInput) {
+    return prisma.deliveries.updateMany({
+      where: { id, deliveryman_id },
+      data: { end_at: new Date() },
     });
   }
 }

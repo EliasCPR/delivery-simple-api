@@ -15,4 +15,16 @@ export class DeliveryService {
   async toAssignDeliveryToDeliveryman({id, deliveryman_id}: DeliveryInput): Promise<DeliveryInput> {
     return await this.deliveryRepository.toAssignDeliveryToDeliveryman({ id, deliveryman_id });
   }
+
+  async findAllDeliveriesByClientId(client_id: string): Promise<DeliveryInput[]> {
+    return await this.deliveryRepository.findAllDeliveriesByClientId(client_id);
+  }
+
+  async findAllDeliveriesByDeliverymanId(deliveryman_id: string): Promise<DeliveryInput[]> {
+    return await this.deliveryRepository.findAllDeliveriesByDeliverymanId(deliveryman_id);
+  }
+
+  async updateEndAt({id, deliveryman_id}: DeliveryInput) {
+    return await this.deliveryRepository.updateEndAt({ id, deliveryman_id });
+  }
 }

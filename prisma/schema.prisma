@@ -18,7 +18,7 @@ model Deliveryman {
 
   created_at DateTime     @default(now())
   updated_at DateTime     @updatedAt
-  Deliveries Deliveries[]
+  deliveries Deliveries[]
 
   @@map("deliverymen")
 }
@@ -31,7 +31,7 @@ model Clients {
 
   created_at DateTime     @default(now())
   updated_at DateTime     @updatedAt
-  Deliveries Deliveries[]
+  deliveries Deliveries[]
 
   @@map("clients")
 }

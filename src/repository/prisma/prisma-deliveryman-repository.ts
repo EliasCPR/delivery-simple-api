@@ -33,7 +33,9 @@ export class PrismaDeliverymanRepository implements DeliverymanRepository {
 
   getDeliverymanById(id: string): Promise<DeliverymanInput> {
     return prisma.deliveryman.findFirst({
-      where: { id },
+      where: { id : {
+        equals: id,
+      } },
     });
   }
 
@@ -49,7 +51,6 @@ export class PrismaDeliverymanRepository implements DeliverymanRepository {
       where: { id: id },
       data: {
         ...deliveryman,
-        updated_at: new Date(),
       },
     });
   }

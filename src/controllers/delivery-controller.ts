@@ -21,10 +21,7 @@ export async function createDelivery(req: Request, res: Response) {
   }
 }
 
-export async function findAllDeliveriesAvailable(
-  req: Request,
-  res: Response
-) {
+export async function findAllDeliveriesAvailable(req: Request, res: Response) {
   try {
     const deliveries = await deliveryService.findAllDeliveriesAvailable();
 
@@ -36,7 +33,10 @@ export async function findAllDeliveriesAvailable(
   }
 }
 
-export async function toAssignDeliveryToDeliveryman(req: Request, res: Response) {
+export async function toAssignDeliveryToDeliveryman(
+  req: Request,
+  res: Response
+) {
   const { deliveryman_id } = req;
   const { id } = req.params;
 
@@ -47,6 +47,57 @@ export async function toAssignDeliveryToDeliveryman(req: Request, res: Response)
     });
 
     return res.status(200).send(delivery);
+  } catch (e) {
+    return res.status(400).send({
+      message: e.message,
+    });
+  }
+}
+
+export async function findAllDeliveriesByClientId(req: Request, res: Response) {
+  try {
+    const { client_id } = req;
+    const deliveries = await deliveryService.findAllDeliveriesByClientId(
+      client_id
+    );
+
+    return res.status(200).send(deliveries);
+  } catch (e) {
+    return res.status(400).send({
+      message: e.message,
+    });
+  }
+}
+
+export async function findAllDeliveriesByDeliverymanId(
+  req: Request,
+  res: Response
+) {
+  try {
+    const { deliveryman_id } = req;
+    const deliveries = await deliveryService.findAllDeliveriesByDeliverymanId(
+      deliveryman_id
+    );
+
+    return res.status(200).send(deliveries);
+  } catch (e) {
+    return res.status(400).send({
+      message: e.message,
+    });
+  }
+}
+
+export async function deliveryUpdateEndDate(req: Request, res: Response) {
+  try {
+    const { deliveryman_id } = req;
+    
+    const { id } = req.params;
+
+    const delivery = await deliveryService.updateEndAt({
+      deliveryman_id, id
+    });
+
+    return res.status(200).send({message: "finished delivery successfully"});
   } catch (e) {
     return res.status(400).send({
       message: e.message,
