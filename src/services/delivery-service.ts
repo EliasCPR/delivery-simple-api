@@ -1,8 +1,12 @@
+import { MailAdapter } from "../adapters/mail-adapter";
 import { DeliveryInput } from "../repository/deliveries-repository";
 import { PrismaDeliveryRepository } from "../repository/prisma/prisma-deliveries-repositories";
 
 export class DeliveryService {
-  constructor(private readonly deliveryRepository: PrismaDeliveryRepository) {}
+  constructor(
+    private deliveryRepository: PrismaDeliveryRepository,
+    private mailAdapter: MailAdapter
+    ) {}
 
   async create({client_id, item_name}: DeliveryInput): Promise<DeliveryInput> {
     return await this.deliveryRepository.createDelivery({ client_id, item_name });
@@ -13,6 +17,12 @@ export class DeliveryService {
   }
 
   async toAssignDeliveryToDeliveryman({id, deliveryman_id}: DeliveryInput): Promise<DeliveryInput> {
+    this.mailAdapter.sendMail({
+      subject: "Nova entrega para você",
+      body: [
+        `Olá, ${deliveryman_id} você tem uma nova entrega para você!` ,
+      ].join("\n")
+    });
     return await this.deliveryRepository.toAssignDeliveryToDeliveryman({ id, deliveryman_id });
   }
 

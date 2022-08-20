@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  delivery-postgres:
+    container_name: delivery-postgres
+    hostname: delivery-postgres
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    environment: 
+      POSTGRES_DB: delivery
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+
+volumes:
+  postgres-data:
+    driver: local
+
