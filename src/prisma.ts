@@ -19,7 +19,7 @@ const prisma = new PrismaClient({
       level: "warn",
     },
   ],
-  errorFormat: "colorless",
+  errorFormat: "minimal",
 });
 
 prisma.$connect();

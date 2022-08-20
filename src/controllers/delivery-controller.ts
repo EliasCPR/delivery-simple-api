@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
+import { NodemailerMailAdapter } from "../adapters/nodemailer/nodemailer-mail-adapter";
 
 import { PrismaDeliveryRepository } from "../repository/prisma/prisma-deliveries-repositories";
 import { DeliveryService } from "../services/delivery-service";
 
+const mailAdapter = new NodemailerMailAdapter();
 const prismaDeliveryRepository = new PrismaDeliveryRepository();
-const deliveryService = new DeliveryService(prismaDeliveryRepository);
+const deliveryService = new DeliveryService(prismaDeliveryRepository, mailAdapter);
 
 export async function createDelivery(req: Request, res: Response) {
   const { item_name } = req.body;
